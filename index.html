@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Q4 Drill 1</title>
+
+        <style>
+            body {
+                font-family: 'Courier New', Courier, monospace;
+                font-size: smaller;
+
+                text-align: center;
+
+                height: 90vh;
+                margin: 0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                background-color: rgba(180, 180, 123, 0.493);
+            }
+
+            .container {
+                width: 400px;
+                padding: 20px 35px;
+                border-radius: 7px;
+                
+                margin: auto;
+                background-color: white;
+            }
+
+            input {
+                width: 80%;
+            }
+
+            .output {
+                font-size: 1rem;
+            }
+
+            button {
+                font-family: 'Courier New', Courier, monospace;
+                border-radius: 0.2rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h2>Electricty Consumption Classifier</h2>
+            <hr>
+
+            <h3>kWh</h3>
+            <input type="number" min="0" id="power" placeholder="Please enter your power consumption rate.">
+            
+            <br><br>
+
+            <button onclick="classifyConsumption();">
+                Classify
+            </button>
+
+            <p class="output" id="output"></p>
+        </div>
+
+        <script>
+            function classifyConsumption() {
+                const outputElement = document.getElementById("output");
+                let powerUsage = document.getElementById("power").value;
+
+                outputElement.innerHTML = "<br><hr><br>";
+
+                if (powerUsage === "" || powerUsage == null || powerUsage < 0) { // guard statement in case of errors
+                    outputElement.innerHTML += "<span style='color: red;'><b>Error:</b> Unexpected value</span>";
+                    alert("Invalid power value. Please enter a number greater than 0 and less than " + String(Number.MAX_VALUE) + ".");
+                    return;
+                }
+
+                powerUsage = Number(powerUsage);
+
+                let description = "";
+                let selectedClass = "";
+                
+                // IF STATEMENT usage example
+                if (powerUsage > 500) {
+                    description = "Heavy electricity users";
+                } else if (powerUsage >= 300) {
+                    description = "Higher electricity usage";
+                } else if (powerUsage >= 200) {
+                    description = "Typical electricity usage";
+                } else if (powerUsage >= 100) {
+                    description = "Normal residential rate";
+                } else {
+                    description = "Discounted electricity rates";
+                }
+
+                // SWITCH CASE usage example
+                switch(description) {
+                    case "Heavy electricity users":
+                        selectedClass = "Very High Consumption";
+                        break;
+                    case "Higher electricity usage":
+                        selectedClass = "High Consumption";
+                        break;
+                    case "Typical electricity usage":
+                        selectedClass = "Average Consumption";
+                        break;
+                    case "Normal residential rate":
+                        selectedClass = "Low Consumption";
+                        break;
+                    default:
+                        selectedClass = "Lifeline Consumer"; 
+                        break;
+                }
+
+                outputElement.innerHTML += "<b>Class:</b> " + selectedClass + "<br><br> " + description; 
+            }
+        </script>
+    </body>
+
+</html>
